@@ -1,0 +1,1071 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,fetch,异步请求," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Chris's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/ico/favicon.jpg?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="导读传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。">
+<meta name="keywords" content="javascript,fetch,异步请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异步请求fetch之初体验">
+<meta property="og:url" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/index.html">
+<meta property="og:site_name" content="Chris&#39;s blog">
+<meta property="og:description" content="导读传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。">
+<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493189699882.jpg">
+<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493195650417.jpg">
+<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493195978930.jpg">
+<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493195894208.jpg">
+<meta property="og:updated_time" content="2017-06-20T07:28:02.516Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="异步请求fetch之初体验">
+<meta name="twitter:description" content="导读传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。">
+<meta name="twitter:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493189699882.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dclcats.github.io/2017/04/26/异步请求之fetch/"/>
+
+
+
+
+
+  <title>异步请求fetch之初体验 | Chris's blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+
+    <canvas id="canvas" width="100%" height="100%"></canvas>
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QbxQ6uZLFMbAupahZ_tz','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://dclcats.github.io/2017/04/26/异步请求之fetch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chris">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                异步请求fetch之初体验
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T14:26:57+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/front-end/" itemprop="url" rel="index">
+                    <span itemprop="name">front-end</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/front-end/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/front-end/JavaScript/异步请求/" itemprop="url" rel="index">
+                    <span itemprop="name">异步请求</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/front-end/JavaScript/异步请求/fetch/" itemprop="url" rel="index">
+                    <span itemprop="name">fetch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/26/异步请求之fetch/" class="leancloud_visitors" data-flag-title="异步请求fetch之初体验">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。<a id="more"></a>当然为了便于开发者， 各种三方工具将ajax包装，然后给开发者使用，jquery、axios等等。这都不是今天的重点， 今天要说一个JavaScript原生的获取资源接口 Fetch API， 虽然各大浏览器支持率不高，但是这样的一个概念确实值得了解学习，并且现在我们可以通过polyfill来实现不同浏览器的兼容性问题</p>
+<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h2><p>先来看看各个浏览器对fetch的原生支持情况，可以看到支持性并不是很高，safari在10.1 之后才支持，ios更是10.3之后才支持，IE完全不支持。当然新技术的发展总会经历这个过程。不过，想提前尝尝鲜也是可以的我们可以使用 <a href="https://github.com/github/fetch" target="_blank" rel="external">polyfill</a></p>
+<p><img src="./images/1493189699882.jpg" alt="Fetch原生支持" title="Fetch原生支持"></p>
+<p>声明：以下的所有代码测试都是基于 Chrome 实现</p>
+<p>废话不多说，</p>
+<p>fetch 返回的是一个Promise，我们先来看一个基本的 fetch 结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fetch(url, option).then( res =&gt; &#123;</div><div class="line">    //do something</div><div class="line">&#125;).catch(err =&gt; &#123;</div><div class="line">    //do something</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>fetch 的url 参数是必须的，option参数可选<br>以上就是整个的请求以及处理过程， 惊不惊喜，意不意外，没错就是这么简单清晰明了，没有原生ajax的那些 <code>XMLHttpRequest</code> bulabula 一大堆。也不需要再额外引入一个jquery包（当然项目中使用到的话除外）。当然因为fetch的返回值是一个Promise， 不需要再去使用回调函数从而有效避免回调地狱。</p>
+<p>当然，fetch不止于此，我们的需求也不止于此，我们可能需要post请求，可能需要跨域请求，控制从服务器获取的信息的格式（json、string、blob等），此时，便需要设置参数信息，对返回信息进行处理。</p>
+<h3 id="option"><a href="#option" class="headerlink" title="option"></a>option</h3><p>来看看fetch的可选参数option的可选值，fetch默认是get方法，也可以在option中设置为其他方法</p>
+<ul>
+<li>method：get | post 等方法</li>
+<li>headers：任何你想加到请求中的头，可以是对象字面量的方式也可以是通过 Headers</li>
+<li>body：发送给服务器的信息， 可以是JSON, ufferSource, FormData, URLSearchParams, 或 USVString。注意get和HEAD请求没有body</li>
+<li>mode：请求模式， 可选值为 cors, no-cors, same-origin, 或 navigate，cors-with-forced-preflight。默认值应该为 cors。但在Chrome中，Chrome 47 之前的版本默认值为 no-cors ，自Chrome 47起，默认值为same-origin。–MDN Request</li>
+<li>credentials：在请求中是否需要凭据。在请求数据中根据是否需要携带Cookie 来设置其值，可选值为omit（在请求中不懈怠认证凭据（Cookie））, same-origin（在同原站点下包含凭据）, 或 include（对所有网站包含认证凭据）</li>
+<li>cache：如何处理缓存，可取值有 default | no-store | no-cache | reload | force-cache | only-if-cached</li>
+<li>redirect：对重定向的处理，可取值 follow, error,  redirect</li>
+<li>referrer：一个指定了no-referrer, client, 或一个 URL的 USVString 。默认值是client.</li>
+<li>integrity: 包括请求的 subresource integrity 值 (e.g.,  sha256-BpfBw7ivV8q2jLiT13fxDYAe2tJllusRSZ273h2nFSE=).</li>
+</ul>
+<h4 id="mode"><a href="#mode" class="headerlink" title="mode"></a>mode</h4><p>mode 参数便于 CORS， 设置不同的值可以使在不同的请求方式下，使得请求有效。</p>
+<ul>
+<li>cors：在同域和带有CORS响应头的跨域下可以请求成功</li>
+<li>no-cors：常用于在跨域不带CORS场景下， 此时请求发出并且会有响应，但是此时type为“opaque”， status为0 ，js获取不到返回数据。</li>
+<li>same-origin：在同域下请求</li>
+<li>cors-with-forced-preflight：在请求前进行preflight 检查</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;no-cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	return response;</div><div class="line">&#125;).then(function(data) &#123;</div><div class="line">	console.log(data);</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>执行以上代码返回</p>
+<p><img src="./images/1493195650417.jpg" alt="no-cors返回值信息" title="no-cors返回值信息"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	return response;</div><div class="line">&#125;).then(function(data) &#123;</div><div class="line">	console.log(data);</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>以上代码返回</p>
+<p><img src="./images/1493195978930.jpg" alt="cors返回值" title="cors返回值"></p>
+<h4 id="headers"><a href="#headers" class="headerlink" title="headers"></a>headers</h4><p>该参数的值可以为对象字面量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">headers： &#123;</div><div class="line">    &quot;Content-Type&quot;: &quot;application/json&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>也可以创建 Headers 对象，通过append() 和delete() 等方法对其进行操作，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var headers = new Headers();</div><div class="line">headers.append( &quot;Content-Type&quot;, &quot;application/json&quot;);</div><div class="line">fetch(url, &#123;</div><div class="line">    method: post,</div><div class="line">	headers: headers,</div><div class="line">	body: &#123;</div><div class="line">	    name: &quot;jack&quot;</div><div class="line">	&#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><p>Fetch 提供了对 Request 和 Response （以及其他与网络请求有关的）对象的通用定义。所以在一个Fetch请求中，完全可以只使用Request 和 Response两个对象，通过Request 设置参数，通过Response 对返回值进行处理。<br>一个Fetch还可以写成以下形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var myHeaders = new Headers();</div><div class="line">myHeaders.append(&apos;Content-Type&apos;, &apos;image/jpeg&apos;);</div><div class="line"></div><div class="line">var option = &#123; method: &apos;GET&apos;,</div><div class="line">    headers: myHeaders,</div><div class="line">    mode: &apos;cors&apos;,</div><div class="line">    cache: &apos;default&apos; &#125;;</div><div class="line"></div><div class="line">var myRequest = new Request(&apos;https://api.github.com/users/mzabriskie&apos;,option);</div><div class="line"></div><div class="line">fetch(myRequest).then(function(response) &#123;</div><div class="line">    ... </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>参数设置如 option 下介绍</p>
+<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><p>Fetch API 的Response接口呈现了对一次请求的响应数据</p>
+<p>其包含一次请求的响应信息，响应状态等。<br>包含的一些常用属性（只读）</p>
+<ul>
+<li>url：包含请求地址url</li>
+<li>status：响应状态码（200成功）</li>
+<li>ok：一个布尔值标识请求成功或失败</li>
+<li>statusText：包含与状态码对应的状态信息</li>
+<li>headers：包含于请求关联的Headers对象</li>
+</ul>
+<p><strong>方法</strong></p>
+<ul>
+<li>clone()： 创建Response对象的克隆</li>
+</ul>
+<p>Response可以使用以下方法，对响应数据进行处理</p>
+<p>arrayBuffer()、blob()、formData()、json()、text()等<br>以下为使用json() 方法返回的数据信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;no-cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	return response.json();</div><div class="line">&#125;).then(function(data) &#123;</div><div class="line">	console.log(data);</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><img src="./images/1493195894208.jpg" alt="cors json()返回值" title="cors json()返回值"></p>
+<h4 id="检测请求是否成功"><a href="#检测请求是否成功" class="headerlink" title="检测请求是否成功"></a>检测请求是否成功</h4><p>同XMLHttpResponse一样，请求发出，服务器发出返回码，除了407以外，其不会进入错误捕捉。也就是说除了网络故障或者跨域请求被拒绝等请求失败的情况，fetch() 的Promise是不会 reject的，所以为了请求能按照我们的预期实现，我们必须加一个判断，判断请求是否成功并返回了我们想要的数据。我们当然可以像 XMLHttpResponse 一样对响应的状态码进行判断，不过我们还有选择，对response.ok 这个布尔值入手。<br>细心的同学可能从之前的截图中看到，在请求成功和失败的情况下，属性 ok 的值 分别为true 和false 这里就不赘余天价截图了，上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	if(response.ok) &#123;</div><div class="line">	    response.json().then(data =&gt; &#123;</div><div class="line">	        console.log(data);</div><div class="line">	    &#125;);</div><div class="line">	&#125; else &#123;</div><div class="line">	    console.log(&quot;请求不成功，状态码为&quot;, response.status);</div><div class="line">	&#125;</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>致此， 一个 fetch 的简单请求便完成了，但是fetch功能远不止这些</p>
+<p>fetch 与 ES7的async/await 搭配使用等等，路很长一步一脚印</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API" target="_blank" rel="external">Fetch API - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Request" target="_blank" rel="external">Request - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Headers" target="_blank" rel="external">Headers - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Response" target="_blank" rel="external">Response - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Body" target="_blank" rel="external">Body - Web APIs | MDN</a></p>
+
+        <p><strong>欢迎留言交流，如需转载请注明出处</strong></p>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/pay/wechat-reward-image.jpg" alt="Chris WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/pay/alipay-reward-image.jpg" alt="Chris Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/24/深拷贝-浅拷贝/" rel="next" title="JavaScript之深拷贝&浅拷贝">
+                <i class="fa fa-chevron-left"></i> JavaScript之深拷贝&浅拷贝
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/10/安卓下微信内置浏览器视频出现解析错误/" rel="prev" title="安卓下微信内置浏览器视频出现解析错误">
+                安卓下微信内置浏览器视频出现解析错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODMzNy80OTA5"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Chris" />
+          <p class="site-author-name" itemprop="name">Chris</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/dclcats/" target="_blank" title="GitHub">
+                  
+                    
+                      <i class="fa fa-fw fa-github"></i>
+                    
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.cnblogs.com/dongcanliang/" target="_blank" title="博客">
+                  
+                    
+                      <i class="fa fa-fw fa-globe"></i>
+                    
+                  
+                  博客
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3021649775/" target="_blank" title="微博">
+                  
+                    
+                      <i class="fa fa-fw fa-weibo"></i>
+                    
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/c0952c41735c/" target="_blank" title="简书">
+                  
+                    
+                      <img class="dc-sidebar-ico" src="/images/jianshu.ico" alt="简书小图标">
+                    
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+<div style="height: 86px; width: 216px;padding: 0px;">
+	<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=216 height=86 src="//music.163.com/outchain/player?type=2&id=2061452&auto=0&height=66"></iframe>
+	
+</div>
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导读"><span class="nav-number">1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fetch"><span class="nav-number">2.</span> <span class="nav-text">Fetch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#option"><span class="nav-number">2.1.</span> <span class="nav-text">option</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mode"><span class="nav-number">2.1.1.</span> <span class="nav-text">mode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#headers"><span class="nav-number">2.1.2.</span> <span class="nav-text">headers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request"><span class="nav-number">2.2.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response"><span class="nav-number">2.3.</span> <span class="nav-text">Response</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#检测请求是否成功"><span class="nav-number">2.3.1.</span> <span class="nav-text">检测请求是否成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chris</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/Ball.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/custom.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODMzNy80OTA5">
+      <script type="text/javascript">
+        (function(d, s) {
+          var j, e = d.getElementsByTagName(s)[0];
+          if (typeof LivereTower === 'function') { return; }
+          j = d.createElement(s);
+          j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+          j.async = true;
+          e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+      </script>
+    </div>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8OmkeWNU2zJdUFBbsYcytfzh-gzGzoHsz", "Va7MHRFeECzY0Y3ulYOYiwwT");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

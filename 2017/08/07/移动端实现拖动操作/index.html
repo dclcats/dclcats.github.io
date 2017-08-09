@@ -1,0 +1,977 @@
+<!doctype html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="front-end,javascript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Chris's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/ico/favicon.jpg?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言近期有个项目需求，需要用到拖动事件。由于不需要考虑IE8等低端浏览器的兼容性， 所以想到HTML5中的drag事件， 但是发现移动端 android &amp;amp; IOS 并不支持 drag 事件。所有新事物的产生都不是偶然， 所以决定自己去实现一个页面元素的拖动。">
+<meta name="keywords" content="front-end,javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端实现拖动操作">
+<meta property="og:url" content="https://dclcats.github.io/2017/08/07/移动端实现拖动操作/index.html">
+<meta property="og:site_name" content="Chris&#39;s blog">
+<meta property="og:description" content="前言近期有个项目需求，需要用到拖动事件。由于不需要考虑IE8等低端浏览器的兼容性， 所以想到HTML5中的drag事件， 但是发现移动端 android &amp;amp; IOS 并不支持 drag 事件。所有新事物的产生都不是偶然， 所以决定自己去实现一个页面元素的拖动。">
+<meta property="og:image" content="https://dclcats.github.io/2017/08/07/移动端实现拖动操作/images/1502175937.png">
+<meta property="og:updated_time" content="2017-08-08T08:19:54.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动端实现拖动操作">
+<meta name="twitter:description" content="前言近期有个项目需求，需要用到拖动事件。由于不需要考虑IE8等低端浏览器的兼容性， 所以想到HTML5中的drag事件， 但是发现移动端 android &amp;amp; IOS 并不支持 drag 事件。所有新事物的产生都不是偶然， 所以决定自己去实现一个页面元素的拖动。">
+<meta name="twitter:image" content="https://dclcats.github.io/2017/08/07/移动端实现拖动操作/images/1502175937.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: false,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://dclcats.github.io/2017/08/07/移动端实现拖动操作/"/>
+
+
+
+
+
+  <title>移动端实现拖动操作 | Chris's blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+
+    <canvas id="canvas" width="100%" height="100%"></canvas>
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chris's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'QbxQ6uZLFMbAupahZ_tz','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://dclcats.github.io/2017/08/07/移动端实现拖动操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chris">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chris's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                移动端实现拖动操作
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-07T10:45:12+08:00">
+                2017-08-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/front-end/" itemprop="url" rel="index">
+                    <span itemprop="name">front-end</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/front-end/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/07/移动端实现拖动操作/" class="leancloud_visitors" data-flag-title="移动端实现拖动操作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>近期有个项目需求，需要用到拖动事件。由于不需要考虑IE8等低端浏览器的兼容性， 所以想到HTML5中的<code>drag</code>事件， 但是发现移动端 <code>android &amp; IOS</code> 并不支持 <code>drag</code> 事件。所有新事物的产生都不是偶然， 所以决定自己去实现一个页面元素的拖动。</p>
+<a id="more"></a>
+<p>实现页面元素的主要思路，是通过监听事件（<code>touchstart</code>）判断要拖动的元素并定位该元素； 然后监听移动事件（<code>touchmove</code>）判断手指移动的方向距离并将这些参数转换为元素的移动方向距离，通过 <code>transform</code> （当然也可以通过定位<code>top&amp;left</code>等）移动元素； 当然有开始就有停下来，所以还要监听结束（<code>touchend</code>）事件，在结束的时候进行相应的处理，返回初始位置，或者停在结束的位置。</p>
+<p>现在整体思路有了，然后就是一步步的实现。</p>
+<p><a href="https://github.com/dclcats/library/tree/master/drag" target="_blank" rel="external">源代码文件</a></p>
+<p><a href="https://dclcats.github.io/library/examples/index.html">demo</a> （请在移动端打开或者模拟移动端打开）</p>
+<p>手机请扫</p>
+<p><img src="./images/1502175937.png" alt="drag demo 地址二维码" title="drag demo 地址二维码"></p>
+<h2 id="js实现拖动操作"><a href="#js实现拖动操作" class="headerlink" title="js实现拖动操作"></a>js实现拖动操作</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>就像盖房子需要打地基一样，写程序实现一个功能需要初始化。</p>
+<p>初始化主要是对传入参数处理，然后做一些基本定义。在这里实现的拖动操作， 以将页面元素拖入垃圾箱为背景来进行一系列的操作。</p>
+<p>首先， 我们需要定义可操作的元素，即需要被拖动的元素。接下来就是对可操作元素进行操作，这里需要绑定事件，也就是touch事件，包括 <code>touchstart/touchmove/touchend</code>。在对应的事件内进行相应的操作，从而完成拖动</p>
+<h3 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h3><p>初始化之后，我们就需要对可操作元素进行事件的绑定，<br>先上代码，以下分别是对应touch事件以及对应的操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">Drag.prototype.touchstart = function(e) &#123;</div><div class="line">	e.preventDefault();</div><div class="line">	e.stopPropagation();</div><div class="line">	var tar = e.target;</div><div class="line">	//执行定义在拖动开始时须执行的函数， 参数为即将拖动的元素</div><div class="line">	this.opts.onStart(tar);</div><div class="line">	//初始化拖动元素的位置信息；</div><div class="line">	this.dragT = tar.offsetTop;</div><div class="line">	this.dragL = tar.offsetLeft;</div><div class="line">	this.dragW = tar.offsetWidth || tar.clientWidth;</div><div class="line">	this.dragH = tar.offsetHeight || tar.clientHeight;</div><div class="line">	//定义开始移动位置</div><div class="line">	this.startX = e.pageX || e.touches[0].pageX;</div><div class="line">	this.startY = e.pageY || e.touches[0].pageY;</div><div class="line">	//重置移动参数</div><div class="line">	this.moveX = this.moveY = 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Drag.prototype.touchmove = function(e) &#123;</div><div class="line">	var tar = e.target;</div><div class="line">	this.opts.onMove(tar);</div><div class="line">	this.nowX = e.pageX || e.touches[0].pageX;</div><div class="line">	this.nowY = e.pageY || e.touches[0].pageY;</div><div class="line"></div><div class="line">	//计算目标元素需移动的距离</div><div class="line">	this.moveX = this.nowX - this.startX;</div><div class="line">	this.moveY = this.nowY - this.startY;</div><div class="line"></div><div class="line">	//检测是否越界，并调整</div><div class="line">	this.checkOver(this.moveX, this.moveY);</div><div class="line">	</div><div class="line">	//进行拖动元素移动操作</div><div class="line">	this.setMove(tar);</div><div class="line"></div><div class="line">	//检测是否落入目标位置</div><div class="line">	this.checkPos(&apos;move&apos;, tar);</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">Drag.prototype.touchend = function(e) &#123;</div><div class="line">	</div><div class="line">	//目标区域的视觉变化</div><div class="line">	this.tarEle.style.cssText = &quot;opacity: .5;&quot;</div><div class="line">	//检测最终位置</div><div class="line">	this.checkPos(&apos;end&apos;, e.target);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注：以上代码是基于将元素拖入垃圾箱的相应事件函数，可根据自己项目情况进行调整，这里提供思路。</p>
+<p>有了事件监听，探知了我们手指触摸、移动、抬起等，我们要将对应的操作实现到页面内的元素，便需要一个移动元素的操作，便是上边的 <code>setMove</code> 函数（以下方法使用前确定你的浏览器支持）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Drag.prototype.setMove = function(e, type) &#123;</div><div class="line">	var x = this.moveX || 0,</div><div class="line">		y = this.moveY || 0；</div><div class="line">	if(type === &apos;reset&apos;) &#123;</div><div class="line">		e.style.cssText = &apos;&apos;;</div><div class="line">		return;</div><div class="line">	&#125;</div><div class="line">	e.style.cssText += &apos;position: absolute;-webkit-transform: translate(&apos;+x+&apos;px,&apos;+y+&apos;px);&apos;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>没错就是简单粗暴的调整 <code>css</code> 来实现移动元素</p>
+<p>当然再加上验证元素是否越界（这个界限根据自己情况指定，可以在自己设定的一个盒模型内，也可以是整个屏幕，根据自己情况而定，这里不贴代码）</p>
+<p>因为我这里有个垃圾桶，所以需要判断拖动元素是否落入垃圾桶，然后进行后续操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Drag.prototype.checkPos = function(type, e) &#123;</div><div class="line"></div><div class="line">	//判断拖动元素是否到达目标位置，判断方式更具情况而定，此处判断的依据是：touch事件位置判断，即结束时touch的位置是否在目标区域位置</div><div class="line">	if(this.nowX &gt; this.tarL &amp;&amp; this.nowX &lt; this.tarL + this.tarW &amp;&amp;  this.nowY &gt; this.tarT &amp;&amp; this.nowY &lt; this.tarT + this.tarH) &#123;</div><div class="line">		//进入目标区域</div><div class="line">		if(type === &apos;move&apos; &amp;&amp; !!this.opts.tarEle) &#123;</div><div class="line">			//在移动过程中，进入目标区域</div><div class="line">			this.opts.onMoveIn(this.tarEle);</div><div class="line">		&#125; else &#123;</div><div class="line">			//在拖动结束时进入目标区域</div><div class="line">			this.opts.onEnd(e);</div><div class="line">		&#125;</div><div class="line">	&#125; else &#123;</div><div class="line">		//落在目标区域外的情况</div><div class="line">		this.tarEle.style.cssText = &quot;opacity: .5;&quot;</div><div class="line">		if(type === &apos;end&apos;)&#123;</div><div class="line">			this.resetFun(e);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>致此整个移动过程都已实现</p>
+<p>此处只是指出思路，具体执行过程根据自己的项目情况进行相应的调整</p>
+
+        <p><strong>欢迎留言交流，如需转载请注明出处</strong></p>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/19/this 指向详细解析（箭头函数）/" rel="next" title="this 指向详细解析（箭头函数）">
+                <i class="fa fa-chevron-left"></i> this 指向详细解析（箭头函数）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODMzNy80OTA5"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Chris" />
+          <p class="site-author-name" itemprop="name">Chris</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/dclcats/" target="_blank" title="GitHub">
+                  
+                    
+                      <i class="fa fa-fw fa-github"></i>
+                    
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.cnblogs.com/dongcanliang/" target="_blank" title="博客">
+                  
+                    
+                      <i class="fa fa-fw fa-globe"></i>
+                    
+                  
+                  博客
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/3021649775/" target="_blank" title="微博">
+                  
+                    
+                      <i class="fa fa-fw fa-weibo"></i>
+                    
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/c0952c41735c/" target="_blank" title="简书">
+                  
+                    
+                      <img class="dc-sidebar-ico" src="/images/jianshu.ico" alt="简书小图标">
+                    
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+<div style="height: 86px; width: 216px;padding: 0px;">
+	<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=216 height=86 src="//music.163.com/outchain/player?type=2&id=2061452&auto=0&height=66"></iframe>
+	
+</div>
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js实现拖动操作"><span class="nav-number">2.</span> <span class="nav-text">js实现拖动操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件绑定"><span class="nav-number">2.2.</span> <span class="nav-text">事件绑定</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chris</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/Ball.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/custom.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODMzNy80OTA5">
+      <script type="text/javascript">
+        (function(d, s) {
+          var j, e = d.getElementsByTagName(s)[0];
+          if (typeof LivereTower === 'function') { return; }
+          j = d.createElement(s);
+          j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+          j.async = true;
+          e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+      </script>
+    </div>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8OmkeWNU2zJdUFBbsYcytfzh-gzGzoHsz", "Va7MHRFeECzY0Y3ulYOYiwwT");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

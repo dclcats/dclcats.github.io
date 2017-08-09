@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Chris&#39;s blog</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://dclcats.github.io/"/>
+  <updated>2017-08-08T08:19:54.734Z</updated>
+  <id>https://dclcats.github.io/</id>
+  
+  <author>
+    <name>Chris</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>移动端实现拖动操作</title>
+    <link href="https://dclcats.github.io/2017/08/07/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B0%E6%8B%96%E5%8A%A8%E6%93%8D%E4%BD%9C/"/>
+    <id>https://dclcats.github.io/2017/08/07/移动端实现拖动操作/</id>
+    <published>2017-08-07T02:45:12.000Z</published>
+    <updated>2017-08-08T08:19:54.734Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;近期有个项目需求，需要用到拖动事件。由于不需要考虑IE8等低端浏览器的兼容性， 所以想到HTML5中的&lt;code&gt;drag&lt;/code&gt;事件， 但是发现移动端 &lt;code&gt;android &amp;amp; IOS&lt;/code&gt; 并不支持 &lt;code&gt;drag&lt;/code&gt; 事件。所有新事物的产生都不是偶然， 所以决定自己去实现一个页面元素的拖动。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="front-end" scheme="https://dclcats.github.io/categories/front-end/"/>
+    
+      <category term="JavaScript" scheme="https://dclcats.github.io/categories/front-end/JavaScript/"/>
+    
+    
+      <category term="front-end" scheme="https://dclcats.github.io/tags/front-end/"/>
+    
+      <category term="javascript" scheme="https://dclcats.github.io/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>this 指向详细解析（箭头函数）</title>
+    <link href="https://dclcats.github.io/2017/06/19/this%20%E6%8C%87%E5%90%91%E8%AF%A6%E7%BB%86%E8%A7%A3%E6%9E%90%EF%BC%88%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%EF%BC%89/"/>
+    <id>https://dclcats.github.io/2017/06/19/this 指向详细解析（箭头函数）/</id>
+    <published>2017-06-19T07:14:01.000Z</published>
+    <updated>2017-06-20T07:28:02.516Z</updated>
+    
+    <summary type="html">
+    
+      this指向问题分析、总结，包括箭头函数内部的this指向
+    
+    </summary>
+    
+      <category term="front-end" scheme="https://dclcats.github.io/categories/front-end/"/>
+    
+      <category term="JavaScript" scheme="https://dclcats.github.io/categories/front-end/JavaScript/"/>
+    
+    
+      <category term="front-end" scheme="https://dclcats.github.io/tags/front-end/"/>
+    
+      <category term="javascript" scheme="https://dclcats.github.io/tags/javascript/"/>
+    
+      <category term="this指向" scheme="https://dclcats.github.io/tags/this%E6%8C%87%E5%90%91/"/>
+    
+      <category term="箭头函数" scheme="https://dclcats.github.io/tags/%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>安卓下微信内置浏览器视频出现解析错误</title>
+    <link href="https://dclcats.github.io/2017/05/10/%E5%AE%89%E5%8D%93%E4%B8%8B%E5%BE%AE%E4%BF%A1%E5%86%85%E7%BD%AE%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%86%E9%A2%91%E5%87%BA%E7%8E%B0%E8%A7%A3%E6%9E%90%E9%94%99%E8%AF%AF/"/>
+    <id>https://dclcats.github.io/2017/05/10/安卓下微信内置浏览器视频出现解析错误/</id>
+    <published>2017-05-10T07:52:06.000Z</published>
+    <updated>2017-06-20T07:28:02.516Z</updated>
+    
+    <summary type="html">
+    
+      安卓下微信内置浏览器视频报解析错误
+    
+    </summary>
+    
+      <category term="front-end" scheme="https://dclcats.github.io/categories/front-end/"/>
+    
+      <category term="JavaScript" scheme="https://dclcats.github.io/categories/front-end/JavaScript/"/>
+    
+    
+      <category term="front-end" scheme="https://dclcats.github.io/tags/front-end/"/>
+    
+      <category term="javascript" scheme="https://dclcats.github.io/tags/javascript/"/>
+    
+      <category term="android" scheme="https://dclcats.github.io/tags/android/"/>
+    
+      <category term="微信" scheme="https://dclcats.github.io/tags/%E5%BE%AE%E4%BF%A1/"/>
+    
+      <category term="video" scheme="https://dclcats.github.io/tags/video/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>异步请求fetch之初体验</title>
+    <link href="https://dclcats.github.io/2017/04/26/%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82%E4%B9%8Bfetch/"/>
+    <id>https://dclcats.github.io/2017/04/26/异步请求之fetch/</id>
+    <published>2017-04-26T06:26:57.000Z</published>
+    <updated>2017-06-20T07:28:02.516Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;导读&quot;&gt;&lt;a href=&quot;#导读&quot; class=&quot;headerlink&quot; title=&quot;导读&quot;&gt;&lt;/a&gt;导读&lt;/h2&gt;&lt;p&gt;传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。
+    
+    </summary>
+    
+      <category term="front-end" scheme="https://dclcats.github.io/categories/front-end/"/>
+    
+      <category term="JavaScript" scheme="https://dclcats.github.io/categories/front-end/JavaScript/"/>
+    
+      <category term="异步请求" scheme="https://dclcats.github.io/categories/front-end/JavaScript/%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/"/>
+    
+      <category term="fetch" scheme="https://dclcats.github.io/categories/front-end/JavaScript/%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/fetch/"/>
+    
+    
+      <category term="javascript" scheme="https://dclcats.github.io/tags/javascript/"/>
+    
+      <category term="fetch" scheme="https://dclcats.github.io/tags/fetch/"/>
+    
+      <category term="异步请求" scheme="https://dclcats.github.io/tags/%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript之深拷贝&amp;浅拷贝</title>
+    <link href="https://dclcats.github.io/2016/09/24/%E6%B7%B1%E6%8B%B7%E8%B4%9D-%E6%B5%85%E6%8B%B7%E8%B4%9D/"/>
+    <id>https://dclcats.github.io/2016/09/24/深拷贝-浅拷贝/</id>
+    <published>2016-09-24T02:46:53.000Z</published>
+    <updated>2017-06-20T07:28:02.516Z</updated>
+    
+    <summary type="html">
+    
+      JavaScript之深拷贝和浅拷贝，概念分析以及简单的实现
+    
+    </summary>
+    
+      <category term="front-end" scheme="https://dclcats.github.io/categories/front-end/"/>
+    
+      <category term="JavaScript" scheme="https://dclcats.github.io/categories/front-end/JavaScript/"/>
+    
+      <category term="深拷贝&amp;浅拷贝" scheme="https://dclcats.github.io/categories/front-end/JavaScript/%E6%B7%B1%E6%8B%B7%E8%B4%9D-%E6%B5%85%E6%8B%B7%E8%B4%9D/"/>
+    
+    
+      <category term="front-end" scheme="https://dclcats.github.io/tags/front-end/"/>
+    
+      <category term="javascript" scheme="https://dclcats.github.io/tags/javascript/"/>
+    
+      <category term="深拷贝&amp;浅拷贝" scheme="https://dclcats.github.io/tags/%E6%B7%B1%E6%8B%B7%E8%B4%9D-%E6%B5%85%E6%8B%B7%E8%B4%9D/"/>
+    
+  </entry>
+  
+</feed>
