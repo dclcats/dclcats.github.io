@@ -72,7 +72,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="javascript,fetch,异步请求," />
+  <meta name="keywords" content="front-end,移动端," />
 
 
 
@@ -90,22 +90,20 @@
 
 
 
-<meta name="description" content="导读传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。">
-<meta name="keywords" content="javascript,fetch,异步请求">
+<meta name="description" content="概述近期有个移动端页面的项目，存在需要用户输入的表单信息。因为页面不存在滑动（通过overflow设为hidden的方式），所以在点击input标签输入信息时，在安卓机下键盘会遮挡页面底部内容，当点击键盘时，焦点所在的 input标签才会显示在视区里。在IOS不存在此问题（在软键盘弹出时，页面会自动顶上去），存在滑动的页面里也不存在该问题。">
+<meta name="keywords" content="front-end,移动端">
 <meta property="og:type" content="article">
-<meta property="og:title" content="异步请求fetch之初体验">
-<meta property="og:url" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/index.html">
+<meta property="og:title" content="移动端页面输入底部被键盘遮挡问题">
+<meta property="og:url" content="https://dclcats.github.io/2017/08/17/移动端页面输入底部被键盘遮挡问题/index.html">
 <meta property="og:site_name" content="Chris&#39;s blog">
-<meta property="og:description" content="导读传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。">
-<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493189699882.jpg">
-<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493195650417.jpg">
-<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493195978930.jpg">
-<meta property="og:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493195894208.jpg">
-<meta property="og:updated_time" content="2017-06-20T07:28:02.516Z">
+<meta property="og:description" content="概述近期有个移动端页面的项目，存在需要用户输入的表单信息。因为页面不存在滑动（通过overflow设为hidden的方式），所以在点击input标签输入信息时，在安卓机下键盘会遮挡页面底部内容，当点击键盘时，焦点所在的 input标签才会显示在视区里。在IOS不存在此问题（在软键盘弹出时，页面会自动顶上去），存在滑动的页面里也不存在该问题。">
+<meta property="og:image" content="https://dclcats.github.io/2017/08/17/移动端页面输入底部被键盘遮挡问题/images/1502963892764.jpg">
+<meta property="og:image" content="https://dclcats.github.io/2017/08/17/移动端页面输入底部被键盘遮挡问题/images/1502964532905.jpg">
+<meta property="og:updated_time" content="2017-08-17T10:20:01.249Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="异步请求fetch之初体验">
-<meta name="twitter:description" content="导读传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。">
-<meta name="twitter:image" content="https://dclcats.github.io/2017/04/26/异步请求之fetch/images/1493189699882.jpg">
+<meta name="twitter:title" content="移动端页面输入底部被键盘遮挡问题">
+<meta name="twitter:description" content="概述近期有个移动端页面的项目，存在需要用户输入的表单信息。因为页面不存在滑动（通过overflow设为hidden的方式），所以在点击input标签输入信息时，在安卓机下键盘会遮挡页面底部内容，当点击键盘时，焦点所在的 input标签才会显示在视区里。在IOS不存在此问题（在软键盘弹出时，页面会自动顶上去），存在滑动的页面里也不存在该问题。">
+<meta name="twitter:image" content="https://dclcats.github.io/2017/08/17/移动端页面输入底部被键盘遮挡问题/images/1502963892764.jpg">
 
 
 
@@ -133,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="https://dclcats.github.io/2017/04/26/异步请求之fetch/"/>
+  <link rel="canonical" href="https://dclcats.github.io/2017/08/17/移动端页面输入底部被键盘遮挡问题/"/>
 
 
 
 
 
-  <title>异步请求fetch之初体验 | Chris's blog</title>
+  <title>移动端页面输入底部被键盘遮挡问题 | Chris's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -310,7 +308,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://dclcats.github.io/2017/04/26/异步请求之fetch/">
+    <link itemprop="mainEntityOfPage" href="https://dclcats.github.io/2017/08/17/移动端页面输入底部被键盘遮挡问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chris">
@@ -331,7 +329,7 @@
             
             
               
-                异步请求fetch之初体验
+                移动端页面输入底部被键盘遮挡问题
               
             
           </h2>
@@ -346,8 +344,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T14:26:57+08:00">
-                2017-04-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-17T13:31:25+08:00">
+                2017-08-17
               </time>
             
 
@@ -380,30 +378,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/front-end/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/front-end/JavaScript/异步请求/" itemprop="url" rel="index">
-                    <span itemprop="name">异步请求</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/front-end/JavaScript/异步请求/fetch/" itemprop="url" rel="index">
-                    <span itemprop="name">fetch</span>
+                  <a href="/categories/front-end/移动端/" itemprop="url" rel="index">
+                    <span itemprop="name">移动端</span>
                   </a>
                 </span>
 
@@ -419,7 +395,7 @@
 
           
           
-             <span id="/2017/04/26/异步请求之fetch/" class="leancloud_visitors" data-flag-title="异步请求fetch之初体验">
+             <span id="/2017/08/17/移动端页面输入底部被键盘遮挡问题/" class="leancloud_visitors" data-flag-title="移动端页面输入底部被键盘遮挡问题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -447,69 +423,52 @@
       
 
       
-        <h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>传递信息到服务器，从服务器获取信息，是前端发展的重中之重，尤其是现在前后端分离的大前提下，前后端的数据交互是前端的必修科目了。从很久之前到现在，ajax都是每个前端入行者必须技能。<a id="more"></a>当然为了便于开发者， 各种三方工具将ajax包装，然后给开发者使用，jquery、axios等等。这都不是今天的重点， 今天要说一个JavaScript原生的获取资源接口 Fetch API， 虽然各大浏览器支持率不高，但是这样的一个概念确实值得了解学习，并且现在我们可以通过polyfill来实现不同浏览器的兼容性问题</p>
-<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h2><p>先来看看各个浏览器对fetch的原生支持情况，可以看到支持性并不是很高，safari在10.1 之后才支持，ios更是10.3之后才支持，IE完全不支持。当然新技术的发展总会经历这个过程。不过，想提前尝尝鲜也是可以的我们可以使用 <a href="https://github.com/github/fetch" target="_blank" rel="external">polyfill</a></p>
-<p><img src="./images/1493189699882.jpg" alt="Fetch原生支持" title="Fetch原生支持"></p>
-<p>声明：以下的所有代码测试都是基于 Chrome 实现</p>
-<p>废话不多说，</p>
-<p>fetch 返回的是一个Promise，我们先来看一个基本的 fetch 结构</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fetch(url, option).then( res =&gt; &#123;</div><div class="line">    //do something</div><div class="line">&#125;).catch(err =&gt; &#123;</div><div class="line">    //do something</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>fetch 的url 参数是必须的，option参数可选<br>以上就是整个的请求以及处理过程， 惊不惊喜，意不意外，没错就是这么简单清晰明了，没有原生ajax的那些 <code>XMLHttpRequest</code> bulabula 一大堆。也不需要再额外引入一个jquery包（当然项目中使用到的话除外）。当然因为fetch的返回值是一个Promise， 不需要再去使用回调函数从而有效避免回调地狱。</p>
-<p>当然，fetch不止于此，我们的需求也不止于此，我们可能需要post请求，可能需要跨域请求，控制从服务器获取的信息的格式（json、string、blob等），此时，便需要设置参数信息，对返回信息进行处理。</p>
-<h3 id="option"><a href="#option" class="headerlink" title="option"></a>option</h3><p>来看看fetch的可选参数option的可选值，fetch默认是get方法，也可以在option中设置为其他方法</p>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>近期有个移动端页面的项目，存在需要用户输入的表单信息。因为页面不存在滑动（通过<code>overflow</code>设为<code>hidden</code>的方式），所以在点击<code>input</code>标签输入信息时，在安卓机下键盘会遮挡页面底部内容，当点击键盘时，焦点所在的 <code>input</code>标签才会显示在视区里。在IOS不存在此问题（在软键盘弹出时，页面会自动顶上去），存在滑动的页面里也不存在该问题。</p>
+<a id="more"></a>
+<p>目前的解决方案一览</p>
 <ul>
-<li>method：get | post 等方法</li>
-<li>headers：任何你想加到请求中的头，可以是对象字面量的方式也可以是通过 Headers</li>
-<li>body：发送给服务器的信息， 可以是JSON, ufferSource, FormData, URLSearchParams, 或 USVString。注意get和HEAD请求没有body</li>
-<li>mode：请求模式， 可选值为 cors, no-cors, same-origin, 或 navigate，cors-with-forced-preflight。默认值应该为 cors。但在Chrome中，Chrome 47 之前的版本默认值为 no-cors ，自Chrome 47起，默认值为same-origin。–MDN Request</li>
-<li>credentials：在请求中是否需要凭据。在请求数据中根据是否需要携带Cookie 来设置其值，可选值为omit（在请求中不懈怠认证凭据（Cookie））, same-origin（在同原站点下包含凭据）, 或 include（对所有网站包含认证凭据）</li>
-<li>cache：如何处理缓存，可取值有 default | no-store | no-cache | reload | force-cache | only-if-cached</li>
-<li>redirect：对重定向的处理，可取值 follow, error,  redirect</li>
-<li>referrer：一个指定了no-referrer, client, 或一个 URL的 USVString 。默认值是client.</li>
-<li>integrity: 包括请求的 subresource integrity 值 (e.g.,  sha256-BpfBw7ivV8q2jLiT13fxDYAe2tJllusRSZ273h2nFSE=).</li>
+<li>通过 <code>window.onresize</code> 监听页面大小变化，然后通过 <code>window.scrollTo</code> 使页面滚动到所需位置</li>
+<li>通过 <code>Element.scrollIntoView()</code></li>
+<li>通过 <code>Element.scrollIntoViewIfNeeded()</code></li>
 </ul>
-<h4 id="mode"><a href="#mode" class="headerlink" title="mode"></a>mode</h4><p>mode 参数便于 CORS， 设置不同的值可以使在不同的请求方式下，使得请求有效。</p>
+<h2 id="window-scrollTo"><a href="#window-scrollTo" class="headerlink" title="window.scrollTo"></a>window.scrollTo</h2><p>没什么好解释的上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">window.onresize = function () &#123;</div><div class="line">  if (document.activeElement.tagName == &quot;INPUT&quot; || document.activeElement.tagName == &quot;TEXTAREA&quot;) &#123;</div><div class="line">    setTimeout(function () &#123;</div><div class="line">      var top = document.activeElement.getBoundingClientRect().top;</div><div class="line">      window.scrollTo(0,top);</div><div class="line">    &#125;, 0);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>提一下，因为iphone不存在此问题，可以加一个限制条件在android以外的终端下不执行此端代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var ua = navigator.userAgent;</div><div class="line">var isAndroid = /android/i.test(ua); //android终端</div><div class="line">if(!isAndroid) &#123;</div><div class="line">  //执行代码.....</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>提个问题，如果这段代码放在放在 <code>input</code> 等输入标签内可以么？</p>
+<p>经过个人测试不可以，大家有兴趣可以自行测试，如果有可以的机型可以拿出来探讨。</p>
+<p>对这个问题我还想分析下，首先我的页面是不可滚动的，正常情况执行 <code>window.scrollTo</code> 是不会有作用的，但是当弹出软键盘时，页面由于被软键盘顶起，致使页面高度发生了变化，所以此时执行 <code>window.scrollTo</code> 页面会发生变化。但是，由于js触发事件，<code>onresize</code> 事件要在 <code>click</code> 事件之后，不是捕获和冒泡的问题哦。我尝试添加setTimeout，但是这个事件差不同的机型间会存在差异，如果设太长，就又失去了该解决方案的意义了，关于这个见仁见智吧。</p>
+<p>关于此段，持续更新，欢迎交流学习</p>
+<h2 id="Element-scrollIntoView"><a href="#Element-scrollIntoView" class="headerlink" title="Element.scrollIntoView()"></a>Element.scrollIntoView()</h2><p>在MDN中有提到这个是一个实验功能，但他的支持度还是可以的，根据项目情况选择吧。</p>
+<p><img src="./images/1502963892764.jpg" alt="Element.scrollIntoView()"></p>
+<p>其作用就是让当前的元素滚动到浏览器窗口的可视区域内</p>
+<p>使用方式如下</p>
+<blockquote>
+<p>element.scrollIntoView(); // 等同于element.scrollIntoView(true)<br>element.scrollIntoView(alignToTop); // Boolean型参数<br>element.scrollIntoView(scrollIntoViewOptions); // Object型参数</p>
+</blockquote>
+<p>参数分两种</p>
+<p><strong>alignToTop</strong></p>
+<p>一个Boolean值：</p>
 <ul>
-<li>cors：在同域和带有CORS响应头的跨域下可以请求成功</li>
-<li>no-cors：常用于在跨域不带CORS场景下， 此时请求发出并且会有响应，但是此时type为“opaque”， status为0 ，js获取不到返回数据。</li>
-<li>same-origin：在同域下请求</li>
-<li>cors-with-forced-preflight：在请求前进行preflight 检查</li>
+<li>如果为true，元素的顶端将和其所在滚动区的可视区域的顶端对齐。</li>
+<li>如果为true，元素的顶端将和其所在滚动区的可视区域的顶端对齐。</li>
+<li>如果为false，元素的底端将和其所在滚动区的可视区域的底端对齐。</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;no-cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	return response;</div><div class="line">&#125;).then(function(data) &#123;</div><div class="line">	console.log(data);</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>执行以上代码返回</p>
-<p><img src="./images/1493195650417.jpg" alt="no-cors返回值信息" title="no-cors返回值信息"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	return response;</div><div class="line">&#125;).then(function(data) &#123;</div><div class="line">	console.log(data);</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>以上代码返回</p>
-<p><img src="./images/1493195978930.jpg" alt="cors返回值" title="cors返回值"></p>
-<h4 id="headers"><a href="#headers" class="headerlink" title="headers"></a>headers</h4><p>该参数的值可以为对象字面量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">headers： &#123;</div><div class="line">    &quot;Content-Type&quot;: &quot;application/json&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>也可以创建 Headers 对象，通过append() 和delete() 等方法对其进行操作，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var headers = new Headers();</div><div class="line">headers.append( &quot;Content-Type&quot;, &quot;application/json&quot;);</div><div class="line">fetch(url, &#123;</div><div class="line">    method: post,</div><div class="line">	headers: headers,</div><div class="line">	body: &#123;</div><div class="line">	    name: &quot;jack&quot;</div><div class="line">	&#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><p>Fetch 提供了对 Request 和 Response （以及其他与网络请求有关的）对象的通用定义。所以在一个Fetch请求中，完全可以只使用Request 和 Response两个对象，通过Request 设置参数，通过Response 对返回值进行处理。<br>一个Fetch还可以写成以下形式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var myHeaders = new Headers();</div><div class="line">myHeaders.append(&apos;Content-Type&apos;, &apos;image/jpeg&apos;);</div><div class="line"></div><div class="line">var option = &#123; method: &apos;GET&apos;,</div><div class="line">    headers: myHeaders,</div><div class="line">    mode: &apos;cors&apos;,</div><div class="line">    cache: &apos;default&apos; &#125;;</div><div class="line"></div><div class="line">var myRequest = new Request(&apos;https://api.github.com/users/mzabriskie&apos;,option);</div><div class="line"></div><div class="line">fetch(myRequest).then(function(response) &#123;</div><div class="line">    ... </div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>参数设置如 option 下介绍</p>
-<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><p>Fetch API 的Response接口呈现了对一次请求的响应数据</p>
-<p>其包含一次请求的响应信息，响应状态等。<br>包含的一些常用属性（只读）</p>
+<p><strong>scrollIntoViewOptions</strong></p>
+<p>一个boolean或一个带有选项的object：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    behavior: &quot;auto&quot;  | &quot;instant&quot; | &quot;smooth&quot;,</div><div class="line">    block:    &quot;start&quot; | &quot;end&quot;,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果是一个boolean, true 相当于{block: “start”}，false 相当于{block: “end”}</p>
+<p><code>scrollIntoViewOptions</code> 支持度很低， 不建议使用</p>
+<h2 id="Element-scrollIntoViewIfNeeded"><a href="#Element-scrollIntoViewIfNeeded" class="headerlink" title="Element.scrollIntoViewIfNeeded()"></a>Element.scrollIntoViewIfNeeded()</h2><p>在MDN中有提到：<br><strong>该特性是非标准的，请尽量不要在生产环境中使用它！</strong></p>
+<p>但他的支持度还是蛮高的的，根据项目情况选择吧。</p>
+<p><img src="./images/1502964532905.jpg" alt="Element.scrollIntoViewIfNeeded()"></p>
+<p>用法类似与 <code>Element.scrollIntoView()</code> ，但它只有一个参数</p>
+<p><strong>opt_center</strong></p>
+<p>一个 Boolean 类型的值，默认为true:</p>
 <ul>
-<li>url：包含请求地址url</li>
-<li>status：响应状态码（200成功）</li>
-<li>ok：一个布尔值标识请求成功或失败</li>
-<li>statusText：包含与状态码对应的状态信息</li>
-<li>headers：包含于请求关联的Headers对象</li>
+<li>如果为true，则元素将在其所在滚动区的可视区域中居中对其。</li>
+<li>如果为false，则元素将与其所在滚动区的可视区域最近的边缘对齐。 根据可见区域最靠近元素的哪个边缘，元素的顶部将与可见区域的顶部边缘对准，或者元素的底部边缘将与可见区域的底部边缘对准。</li>
 </ul>
-<p><strong>方法</strong></p>
-<ul>
-<li>clone()： 创建Response对象的克隆</li>
-</ul>
-<p>Response可以使用以下方法，对响应数据进行处理</p>
-<p>arrayBuffer()、blob()、formData()、json()、text()等<br>以下为使用json() 方法返回的数据信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;no-cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	return response.json();</div><div class="line">&#125;).then(function(data) &#123;</div><div class="line">	console.log(data);</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p><img src="./images/1493195894208.jpg" alt="cors json()返回值" title="cors json()返回值"></p>
-<h4 id="检测请求是否成功"><a href="#检测请求是否成功" class="headerlink" title="检测请求是否成功"></a>检测请求是否成功</h4><p>同XMLHttpResponse一样，请求发出，服务器发出返回码，除了407以外，其不会进入错误捕捉。也就是说除了网络故障或者跨域请求被拒绝等请求失败的情况，fetch() 的Promise是不会 reject的，所以为了请求能按照我们的预期实现，我们必须加一个判断，判断请求是否成功并返回了我们想要的数据。我们当然可以像 XMLHttpResponse 一样对响应的状态码进行判断，不过我们还有选择，对response.ok 这个布尔值入手。<br>细心的同学可能从之前的截图中看到，在请求成功和失败的情况下，属性 ok 的值 分别为true 和false 这里就不赘余天价截图了，上代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">fetch(&quot;https://api.github.com/users/mzabriskie&quot;, &#123;mode: &quot;cors&quot;&#125;).then(response =&gt; &#123;</div><div class="line">	if(response.ok) &#123;</div><div class="line">	    response.json().then(data =&gt; &#123;</div><div class="line">	        console.log(data);</div><div class="line">	    &#125;);</div><div class="line">	&#125; else &#123;</div><div class="line">	    console.log(&quot;请求不成功，状态码为&quot;, response.status);</div><div class="line">	&#125;</div><div class="line">&#125;).catch(function(e) &#123;</div><div class="line">	console.log(&quot;Oops, error&quot;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>致此， 一个 fetch 的简单请求便完成了，但是fetch功能远不止这些</p>
-<p>fetch 与 ES7的async/await 搭配使用等等，路很长一步一脚印</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API" target="_blank" rel="external">Fetch API - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Request" target="_blank" rel="external">Request - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Headers" target="_blank" rel="external">Headers - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Response" target="_blank" rel="external">Response - Web API 接口 | MDN</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/Body" target="_blank" rel="external">Body - Web APIs | MDN</a></p>
 
         <p><strong>欢迎留言交流，如需转载请注明出处</strong></p>
       
@@ -568,8 +527,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/24/深拷贝-浅拷贝/" rel="next" title="JavaScript之深拷贝&浅拷贝">
-                <i class="fa fa-chevron-left"></i> JavaScript之深拷贝&浅拷贝
+              <a href="/2017/08/11/mongodb常用命令及基础参数信息/" rel="next" title="mongodb常用命令及基础参数信息">
+                <i class="fa fa-chevron-left"></i> mongodb常用命令及基础参数信息
               </a>
             
           </div>
@@ -577,10 +536,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/10/安卓下微信内置浏览器视频出现解析错误/" rel="prev" title="安卓下微信内置浏览器视频出现解析错误">
-                安卓下微信内置浏览器视频出现解析错误 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -767,7 +722,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导读"><span class="nav-number">1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fetch"><span class="nav-number">2.</span> <span class="nav-text">Fetch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#option"><span class="nav-number">2.1.</span> <span class="nav-text">option</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mode"><span class="nav-number">2.1.1.</span> <span class="nav-text">mode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#headers"><span class="nav-number">2.1.2.</span> <span class="nav-text">headers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request"><span class="nav-number">2.2.</span> <span class="nav-text">Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Response"><span class="nav-number">2.3.</span> <span class="nav-text">Response</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#检测请求是否成功"><span class="nav-number">2.3.1.</span> <span class="nav-text">检测请求是否成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#window-scrollTo"><span class="nav-number">2.</span> <span class="nav-text">window.scrollTo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Element-scrollIntoView"><span class="nav-number">3.</span> <span class="nav-text">Element.scrollIntoView()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Element-scrollIntoViewIfNeeded"><span class="nav-number">4.</span> <span class="nav-text">Element.scrollIntoViewIfNeeded()</span></a></li></ol></div>
             
 
           </div>
